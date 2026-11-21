@@ -45,6 +45,7 @@ docker stop score4
 ### Проверка работоспособности
 
 ```bash
+cp .env.example .env
 set -a
 source .env
 set +a
@@ -53,35 +54,35 @@ curl -s "http://127.0.0.1:${PORT}/"; echo
 curl -s -X POST "http://127.0.0.1:${PORT}/increment"; echo
 docker compose down; echo
 docker compose up -d --build --quiet-build --wait; echo
-curl -s -X POST "http://127.0.0.1:${PORT}/increment"; echo
+curl -s "http://127.0.0.1:${PORT}"; echo
 docker compose down -v
 ```
 
 Вывод корректен. Счетчик растет при POST запросах, порт и приветствие берется из .env (на гитхаб присутствует только .env.example)
 
 ```bash
-[+] Building 0.0s (0/0)                                                                                                                                                                                                               
+[+] Building 0.0s (0/0)                                                                                                                                                                        
 [+] up 4/4
- ✔ Image docker-hw-app       Built                                                                                                                                                                                                0.9s
- ✔ Network docker-hw_default Created                                                                                                                                                                                              0.0s
- ✔ Volume docker-hw_dataset  Created                                                                                                                                                                                              0.0s
- ✔ Container docker-hw-app-1 Healthy                                                                                                                                                                                              0.9s
+ ✔ Image docker-hw-app       Built                                                                                                                                                         1.0s
+ ✔ Network docker-hw_default Created                                                                                                                                                       0.0s
+ ✔ Volume docker-hw_dataset  Created                                                                                                                                                       0.0s
+ ✔ Container docker-hw-app-1 Healthy                                                                                                                                                       0.9s
 
-{"greeting": "hello world", "count": 0, "hostname": "a6f112852f2b", "storage": "sqlite"}
-{"greeting": "hello world", "count": 1, "hostname": "a6f112852f2b", "storage": "sqlite"}
+{"greeting": "hello world", "count": 0, "hostname": "89efb3a13a81", "storage": "sqlite"}
+{"greeting": "hello world", "count": 1, "hostname": "89efb3a13a81", "storage": "sqlite"}
 [+] down 2/2
- ✔ Container docker-hw-app-1 Removed                                                                                                                                                                                             10.3s
- ✔ Network docker-hw_default Removed                                                                                                                                                                                              0.2s
+ ✔ Container docker-hw-app-1 Removed                                                                                                                                                      10.4s
+ ✔ Network docker-hw_default Removed                                                                                                                                                       0.2s
 
-[+] Building 0.0s (0/0)                                                                                                                                                                                                               
+[+] Building 0.0s (0/0)                                                                                                                                                                        
 [+] up 3/3
- ✔ Image docker-hw-app       Built                                                                                                                                                                                                0.9s
- ✔ Network docker-hw_default Created                                                                                                                                                                                              0.0s
- ✔ Container docker-hw-app-1 Healthy                                                                                                                                                                                              0.9s
+ ✔ Image docker-hw-app       Built                                                                                                                                                         0.8s
+ ✔ Network docker-hw_default Created                                                                                                                                                       0.0s
+ ✔ Container docker-hw-app-1 Healthy                                                                                                                                                       0.9s
 
-{"greeting": "hello world", "count": 2, "hostname": "33e503fa313a", "storage": "sqlite"}
+{"greeting": "hello world", "count": 1, "hostname": "d4b3c125989a", "storage": "sqlite"}
 [+] down 3/3
- ✔ Container docker-hw-app-1 Removed                                                                                                                                                                                             10.4s
- ✔ Network docker-hw_default Removed                                                                                                                                                                                              0.2s
- ✔ Volume docker-hw_dataset  Removed                                                                                                                                                                                              0.0s     
+ ✔ Container docker-hw-app-1 Removed                                                                                                                                                      10.4s
+ ✔ Network docker-hw_default Removed                                                                                                                                                       0.2s
+ ✔ Volume docker-hw_dataset  Removed                                                                                                                                                       0.0s   
 ```
