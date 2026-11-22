@@ -5,8 +5,22 @@ services:
       - "${PORT}:8000"
     environment:
       GREETING: "${GREETING}"
+      STORAGE: "redis"
+      REDIS_URL: "redis://redis:6379/0"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/healthz')"]
+      interval: 3s
+      timeout: 3s
+      retries: 3
+
+  redis:
+    image: redis:7.4-alpine
     volumes:
       - dataset:/data
-
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 3
 volumes:
   dataset:
